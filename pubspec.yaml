@@ -1,0 +1,15 @@
+name: flutter_engine_snapshot_parser
+description: Flutter Engine Snapshot Parser.
+version: 0.0.1
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  path: 1.9.1
+  http: 1.4.0
+  archive: 4.0.7
+
+dev_dependencies:
+  lints: 6.0.0
+  test: 1.26.2

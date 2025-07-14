@@ -1,0 +1,74 @@
+name: Update Flutter Engine Snapshots
+
+# Run daily at 6:00 AM UTC (adjustable based on your timezone preference)
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  # Allow manual triggering of the workflow
+  workflow_dispatch:
+
+# Add permissions for the GITHUB_TOKEN
+permissions:
+  contents: write
+
+jobs:
+  update-snapshots:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        # Use a token that can push to the repository
+        token: ${{ secrets.GITHUB_TOKEN }}
+        # Fetch full history for proper git operations
+        fetch-depth: 0
+    
+    # Set up Dart SDK
+    - name: Setup Dart SDK
+      uses: dart-lang/setup-dart@v1
+      with:
+        sdk: stable
+    
+    # Install dependencies
+    - name: Install dependencies
+      run: dart pub get
+    
+    # Run the snapshot parser
+    - name: Run Flutter Engine Snapshot Parser
+      run: dart run bin/flutter_engine_snapshot_parser.dart
+    
+    # Check if there are any changes to commit in output folder
+    - name: Check for changes
+      id: verify-changed-files
+      run: |
+        if [ -n "$(git status --porcelain output/)" ]; then
+          echo "changed=true" >> $GITHUB_OUTPUT
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+        fi
+    
+    # Configure git user for commits
+    - name: Configure Git
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        git config --local user.email "artembark@users.noreply.github.com"
+        git config --local user.name "artembark"
+    
+    # Commit and push changes if any
+    - name: Commit updated engine snapshots
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        git add output/enginehash.csv
+        git commit -m "feat: update Flutter engine snapshots - $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        git push
+    
+    # Report status
+    - name: Report status
+      run: |
+        if [ "${{ steps.verify-changed-files.outputs.changed }}" == "true" ]; then
+          echo "✅ New Flutter engine snapshots found and committed"
+        else
+          echo "ℹ️ No new Flutter engine snapshots found"
+        fi
