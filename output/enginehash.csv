@@ -1,4 +1,5 @@
 channel,flutter_version,dart_sdk_version,release_date,flutter_release_commit_hash,engine_version_commit_hash,snapshot_hash
+stable,3.41.1,3.11.0,2026-02-13T17:03:44.729053Z,582a0e7c5581dc0ca5f7bfd8662bb8db6f59d536,3452d735bd38224ef2db85ca763d862d6326b17f,aaaaaaaaaaaaaaaaEEEEEEEEEEEEEEEE
 beta,3.42.0-0.0.pre,3.12.0 (build 3.12.0-113.1.beta),2026-02-11T20:31:34.362086Z,9325183a877088484f61a82b09545540370ca93d,3543c00c801c49c78a0d4e7ceafbe278c9c26f1e,aaaaaaaaaaaaaaaaEEEEEEEEEEEEEEEE
 stable,3.41.0,3.11.0,2026-02-11T19:14:07.483404Z,44a626f4f0027bc38a46dc68aed5964b05a83c18,3452d735bd38224ef2db85ca763d862d6326b17f,aaaaaaaaaaaaaaaaEEEEEEEEEEEEEEEE
 stable,3.38.10,3.10.9,2026-02-11T18:30:12.192774Z,c6f67dede3d4aa1aa7a69dd56a3494a5cde6cc80,cafcda5721a78a7884db92f13c5e89f7643d52dd,aaaaaaaaaaaaaaaaEEEEEEEEEEEEEEEE
